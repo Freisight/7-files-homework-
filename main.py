@@ -41,7 +41,7 @@ for need_dishes in all_recept:
                 if items['ingredient_name'] not in all_need_ing:
                     all_need_ing[items['ingredient_name']] = {'measure': items['measure'], 'quantity' : int(items['quantity'])} 
                 else:
-                    all_need_ing[items['ingredient_name']] = {}
+                    all_need_ing[items['ingredient_name']].setdefault('quantity', int(items['quantity']))
                 # не соединяет нефига сука
 
                 
