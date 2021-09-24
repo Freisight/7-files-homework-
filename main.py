@@ -28,32 +28,56 @@ with open('recipes.txt', 'r', encoding='utf-8') as recipes:
 
 # Задание 2
 # тут создаём список всех блюд
-all_recept = []
+all_dishes = []
 for keys, values in cook_book.items():
-    all_recept.append(keys)
+    all_dishes.append(keys)
 
 # функция будет тут
-all_need_ing = {}
-for need_dishes in all_recept:
-    for recept, need_ing in cook_book.items():
-        if need_dishes == recept:
-            for items in need_ing:
-                if items['ingredient_name'] not in all_need_ing:
-                    all_need_ing[items['ingredient_name']] = {'measure': items['measure'], 'quantity' : int(items['quantity'])} 
-                else:
-                    all_need_ing[items['ingredient_name']].setdefault('quantity', int(items['quantity']))
-                # не соединяет нефига сука
+
+def get_shop_list_by_dishes(all_recept, person_count):
+    all_need_ing = {}
+    for need_dishes in all_recept:
+        for recept, need_ing in cook_book.items():
+            if need_dishes == recept:
+                for items in need_ing:
+                    if items['ingredient_name'] not in all_need_ing:
+                        all_need_ing[items['ingredient_name']] = {'measure': items['measure'], 'quantity' : (int(items['quantity'])) * 2} 
+                    else:
+                        all_need_ing[items['ingredient_name']]['quantity'] = all_need_ing[items['ingredient_name']]['quantity'] + (int(items['quantity']) * person_count)
+    print(all_need_ing)
 
                 
-print(all_need_ing)
+# get_shop_list_by_dishes(all_dishes, 2)
     
     
 
+# Задание 3
 
-# Если в ключе cook_book есть нужное блюдо
-# то пускаем цикл по значению ключа этого блюда, а там список и внутри снова словари
-# мы тогда ingredient_name пишем ключем need_ing, а в значение списываем 'quantity': '100', 'measure': 'мл'
-# Если такого значения еще не было, а если есть, то к прошлым суммируем.
+# получаем количество строк
+
+os.chdir('files')
+
+f = open('1.txt', 'r', encoding='utf-8')
+# content = f.readline()
+print(f.readline())
+print(f.readline())
+f.close()
+
+with open('1.txt', 'r', encoding='utf-8') as first_txt:
+    first_file = [row.rstrip() for row in first_txt]
+    print(len(first_file))
+
+
+
+# выводит весь список файлов в папке
+for file in os.listdir():
+    if '.txt' in file:
+        print(file)
+
+
+
+
+
         
 
 
