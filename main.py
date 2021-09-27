@@ -1,6 +1,7 @@
 # почему меня не работает один без второго
 from os import path
 import os
+from shutil import rmtree
 
 # Задание 1
 
@@ -53,30 +54,44 @@ def get_shop_list_by_dishes(all_recept, person_count):
 
 # Задание 3
 
-# получаем количество строк
-
+# меняем раюочую директорию
 os.chdir('files')
 
+# будущий словарь для данных
 stage_list = {}
 
-# выводит весь список файлов в папке
+# тут проверяем все текстовые файлы, которые лежат в категории
+# потом название файла добавляется в словарь stage_list Как ключ, а его значения - количество строк в этом файл
 for file in os.listdir():
     if '.txt' in file:
             with open(file, 'r', encoding='utf-8') as first_txt:
                 first_file = [row.rstrip() for row in first_txt]
-                # print(file)
-                # print(len(first_file))
                 stage_list[file] = len(first_file)
 
+# сортируем всё это безобразие по значекнию ключа
 sorted_stage_list = dict(sorted(stage_list.items(), key=lambda x: x[1]))
-print(sorted_stage_list)
 
+
+# чтобы не было сбоёв удаляем папку с старыми файлами
+if os.path.isdir('end'):
+    rmtree('end')
+
+# создаём папку
+if not os.path.isdir('end'):
+    os.mkdir('end')
+
+# открываем по циклу один файл и подставляем данные из него в файл
+# потом второй и т.д.
 for files, stroke in sorted_stage_list.items():
     with open(files, 'r', encoding='utf-8') as read_file:
-        with open('endfile.txt', 'a', encoding='utf-8') as write_file:
+        with open('end\endfile.txt', 'a', encoding='utf-8') as write_file:
+            write_file.write(files + '\n')
+            write_file.write(str(stroke) + '\n')
             for item in range(stroke):
-                print(read_file.readline())
-                write_file.write(read_file.readline())
+                content = read_file.readline()
+                content = content.strip()
+                write_file.write(content + '\n')
+
 
             
 
