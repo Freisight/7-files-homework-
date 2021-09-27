@@ -57,22 +57,34 @@ def get_shop_list_by_dishes(all_recept, person_count):
 
 os.chdir('files')
 
-f = open('1.txt', 'r', encoding='utf-8')
-# content = f.readline()
-print(f.readline())
-print(f.readline())
-f.close()
-
-with open('1.txt', 'r', encoding='utf-8') as first_txt:
-    first_file = [row.rstrip() for row in first_txt]
-    print(len(first_file))
-
-
+stage_list = {}
 
 # выводит весь список файлов в папке
 for file in os.listdir():
     if '.txt' in file:
-        print(file)
+            with open(file, 'r', encoding='utf-8') as first_txt:
+                first_file = [row.rstrip() for row in first_txt]
+                # print(file)
+                # print(len(first_file))
+                stage_list[file] = len(first_file)
+
+sorted_stage_list = dict(sorted(stage_list.items(), key=lambda x: x[1]))
+print(sorted_stage_list)
+
+for files, stroke in sorted_stage_list.items():
+    with open(files, 'r', encoding='utf-8') as read_file:
+        with open('endfile.txt', 'a', encoding='utf-8') as write_file:
+            for item in range(stroke):
+                print(read_file.readline())
+                write_file.write(read_file.readline())
+
+            
+
+
+
+
+
+
 
 
 
